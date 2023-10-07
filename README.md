@@ -1,7 +1,7 @@
 # Tony - Synchronize Mp3s with a Creative Tonie
 
-This simple script can be used to upload mp3s to a Creative Tonie. Mp3s are either uploaded from a local directory or can also be specified via a Spotify playlist.
-The latter option uses [spotDL](https://github.com/spotDL/spotify-downloader) and is implemented as a proof-of-concept and should not be used due to legal reasons.
+This simple script can be used to upload mp3s to a Creative Tonie. Mp3s are either uploaded from a local directory or by specifying a (public) Spotify playlist.
+The latter option uses [spotDL](https://github.com/spotDL/spotify-downloader), is implemented as a proof-of-concept and should not be used due to legal reasons.
 
 ## Installation
 
