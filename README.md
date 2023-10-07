@@ -16,14 +16,14 @@ pip install -r requirements.txt
 
 ## Usage
 
-To upload all mp3 located in the directory <dir> to a Creative Tonie use
+To upload all mp3 located in the directory `dir` to a Creative Tonie use
 
 ``` bash
 cd <repo>
 python tony.py --username <tonies.com username> --password <tonies.com password> --input-path <dir>
 ```
 
-To upload all files from a Spotify playlist first get the link <playlist_url> to your public Spotify playlist. You can find this in the Spotify application when
+To upload all files from a Spotify playlist first get the link `playlist_url` to your public Spotify playlist. You can find this in the Spotify application when
 sharing your playlist with others. In the Spotify desktop app the simplest way to get the URL is to right click the playlist and click 'Invite Collaborators' 
 
 ``` bash
