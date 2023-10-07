@@ -3,7 +3,9 @@
 import logging
 import re
 import os
+import subprocess
 import sys
+import time
 import glob
 import spotdl
 from pathlib import Path
@@ -12,7 +14,8 @@ from argparse import ArgumentParser
 from dataclasses import dataclass
 from tempfile import TemporaryDirectory
 
-import spotdl
+from spotdl import Spotdl
+import spotdl.console
 from tonie_api.api import TonieAPI
 from tonie_api.models import Config, CreativeTonie, User
 
@@ -49,11 +52,10 @@ def main():
     
     with TemporaryDirectory() as temp_dir:
         input_path = args.input_path
-        
         if args.playlist is not None:
             os.chdir(temp_dir)
             logging.info("Start download")
-            os.system(f"spotdl --simple-tui {args.playlist}")
+            subprocess.run(["spotdl", args.playlist], check=True)
             logging.info("Download complete")
         else:
             os.chdir(args.input_path)

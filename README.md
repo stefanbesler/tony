@@ -20,6 +20,7 @@ To upload all mp3 located in the directory `dir` to a Creative Tonie use
 
 ``` bash
 cd <repo>
+source venv/bin/activate
 python tony.py --username <tonies.com username> --password <tonies.com password> --input-path <dir>
 ```
 
@@ -28,5 +29,6 @@ sharing your playlist with others. In the Spotify desktop app the simplest way t
 
 ``` bash
 cd <repo>
+source venv/bin/activate
 python tony.py --username <tonies.com username> --password <tonies.com password> --playlist <playlist_url>
 ```
