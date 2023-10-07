@@ -6,7 +6,7 @@ The latter option uses [spotDL](https://github.com/spotDL/spotify-downloader) an
 ## Installation
 
 ``` bash
-git clone [<repo>](https://github.com/stefanbesler/tony.git)
+git clone [[<repo>](https://github.com/stefanbesler/tony.git)](https://github.com/stefanbesler/tony.git)
 cd tony
 pip install virtualenv
 virtualenv venv
