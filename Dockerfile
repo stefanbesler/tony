@@ -1,6 +1,10 @@
 # Pulling ubuntu image with a specific tag from the docker hub.
 FROM ubuntu:18.04
 
+ENV TONY_USERNAME=unkonwn
+ENV TONY_PASSWORD=unknown
+ENV TONY_PLAYLIST=https://open.spotify.com/playlist/unknown
+
 # Adding maintainer name (Optional).
 MAINTAINER beslst
 
