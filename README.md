@@ -14,7 +14,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Usage
+### Usage (local)
 
 To upload all mp3 located in the directory `dir` to a Creative Tonie use
 
@@ -31,4 +31,19 @@ sharing your playlist with others. In the Spotify desktop app the simplest way t
 cd <repo>
 source venv/bin/activate
 python tony.py --username <tonies.com username> --password <tonies.com password> --playlist <playlist_url>
+```
+
+## Docker
+
+To run tony in a docker container and run it every hour, the following steps have to be taken
+
+```
+git clone https://github.com/stefanbesler/tony.git
+cd tony
+docker build --tag tony:main
+docker run -d --restart=unless-stopped \
+  -e TONY_USERNAME=<tonies.com username> \
+  -e TONY_PASSWORD=<tonies.com password> \
+  -e TONY_PLAYLIST=<playlist_url> \
+  --name tony1 tony:main
 ```
