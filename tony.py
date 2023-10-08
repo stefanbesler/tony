@@ -74,7 +74,7 @@ def main():
     household = tonie_api.get_households()[0]
     creative_tonie = tonie_api.get_all_creative_tonies_by_household(household)[0]
     
-    new_titles = [PlaylistTitle(filepath="", title=ch.title) not in playlist_titles for ch in  creative_tonie.chapters]
+    new_titles = [pt.title not in map(lambda x: x.title, creative_tonie.chapters) for pt in playlist_titles]
 
     if True in new_titles:
         logging.info(f"Remove all chapters from '{creative_tonie.name}'")
