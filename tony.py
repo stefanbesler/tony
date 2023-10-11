@@ -3,6 +3,7 @@
 
 import logging
 import re
+import json
 import os
 import subprocess
 import sys
@@ -59,16 +60,23 @@ def main():
         
         if not os.path.exists(args.cache_path):
             logging.info(f"Creating cache folder {args.cache_path}")
-            os.makedirs(args.cache_path)        
+            os.makedirs(args.cache_path)
         
         os.chdir(args.cache_path)
         logging.info("Start download")
-        subprocess.run(["/usr/local/bin/spotdl", "download", args.playlist, "--save-file", "cache.spotdl"], check=True)
+        subprocess.run(["spotdl", "download", args.playlist, "--save-file", "cache.spotdl"], check=True)
         logging.info("Download complete")
     else:
         os.chdir(args.input_path)
         
-    playlist_titles = [PlaylistTitle(filepath=mp3, title=os.path.basename(mp3)) for mp3 in glob.iglob('*.mp3', recursive=False)]
+    playlist_titles = []
+    try:
+        with open(os.path.join(args.cache_path, 'cache.spotdl'), 'r') as f:
+            playlist_titles = [PlaylistTitle(filepath=", ".join(p["artists"]) + " - " + p["name"] + ".mp3", 
+                                title = ", ".join(p["artists"]) + " - " + p["name"]) for p in json.load(f)]
+    except Exception as e:
+        log.error(e)
+        playlist_titles = [PlaylistTitle(filepath=mp3, title=os.path.basename(mp3)) for mp3 in glob.iglob('*.mp3', recursive=False)]
     
     tonie_api = TonieAPI(args.username, args.password)
     household = tonie_api.get_households()[0]
