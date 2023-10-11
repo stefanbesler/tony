@@ -64,7 +64,7 @@ def main():
         
         os.chdir(args.cache_path)
         logging.info("Start download")
-        subprocess.run(["spotdl", "download", args.playlist, "--save-file", "cache.spotdl"], check=True)
+        subprocess.run(["/usr/local/bin/spotdl", "download", args.playlist, "--save-file", "cache.spotdl"], check=True)
         logging.info("Download complete")
     else:
         os.chdir(args.input_path)
