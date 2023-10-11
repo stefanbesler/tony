@@ -76,7 +76,7 @@ def main():
                                 title = ", ".join(p["artists"]) + " - " + p["name"]) for p in json.load(f)]
     except Exception as e:
         log.error(e)
-        playlist_titles = [PlaylistTitle(filepath=mp3, title=os.path.basename(mp3)) for mp3 in glob.iglob('*.mp3', recursive=False)]
+        playlist_titles = [PlaylistTitle(filepath=mp3, title=os.path.splitext(os.path.basename(mp3))[0]) for mp3 in glob.iglob('*.mp3', recursive=False)]
     
     tonie_api = TonieAPI(args.username, args.password)
     household = tonie_api.get_households()[0]
