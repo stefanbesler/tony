@@ -71,10 +71,7 @@ def main():
     try:
         if(args.input_path is None and args.playlist is None):
             raise ValueError(f"--playlist or --input-path argument is required")
-        
-        if(args.input_path is not None and args.playlist is not None):
-            raise ValueError(f"--playlist or --input-path argument is required")    
-        
+                
         input_path = args.input_path
         if args.playlist is not None:
             if args.cache_path is None:
@@ -92,19 +89,23 @@ def main():
                 subprocess.run(["spotdl", "download", args.playlist, "--save-file", "cache.spotdl"], check=True)
                 
             logging.info("Download complete")
-        else:
-            os.chdir(args.input_path)
             
         playlist_titles = []
-        try:
-            json_path = os.path.join(args.cache_path, 'cache.spotdl')
-            with open(json_path, 'r') as f:
-                logging.info(f"Loading {json_path}")
-                playlist_titles = [PlaylistTitle(filepath=", ".join(p["artists"]) + " - " + p["name"] + ".mp3", 
-                                   title = ", ".join(p["artists"]) + " - " + p["name"]) for p in json.load(f)]
-        except:
-            logging.error(e)
-            playlist_titles = [PlaylistTitle(filepath=mp3, title=os.path.splitext(os.path.basename(mp3))[0]) for mp3 in glob.iglob('*.mp3', recursive=False)]
+        if args.cache_path is not None:
+            os.chdir(args.cache_path)
+            try:
+                json_path = os.path.join(args.cache_path, 'cache.spotdl')
+                with open(json_path, 'r') as f:
+                    logging.info(f"Loading {json_path}")
+                    playlist_titles = [PlaylistTitle(filepath=os.path.join(args.cache_path, ", ".join(p["artists"]) + " - " + p["name"] + ".mp3"), 
+                                    title = ", ".join(p["artists"]) + " - " + p["name"]) for p in json.load(f)]
+            except:
+                logging.error(e)
+                playlist_titles += [PlaylistTitle(filepath=os.path.join(args.cache_path, mp3), title=os.path.splitext(os.path.basename(mp3))[0]) for mp3 in glob.iglob('*.mp3', recursive=False)]
+        
+        if args.input_path is not None:
+            os.chdir(args.input_path)
+            playlist_titles += [PlaylistTitle(filepath=os.path.join(args.input_path, mp3), title=os.path.splitext(os.path.basename(mp3))[0]) for mp3 in glob.iglob('*.mp3', recursive=False)]
         
         tonie_api = TonieAPI(args.username, args.password)
         household = tonie_api.get_households()[0]
@@ -112,7 +113,7 @@ def main():
         
         new_titles = [pt.title not in map(lambda x: x.title, creative_tonie.chapters) for pt in playlist_titles]
 
-        if True in new_titles:
+        if True in new_titles or len(playlist_titles) != len(creative_tonie.chapters):
             logging.info(f"Remove all chapters from '{creative_tonie.name}'")
             tonie_api.clear_all_chapter_of_tonie(creative_tonie)
             
