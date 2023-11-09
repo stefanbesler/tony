@@ -42,6 +42,7 @@ git clone https://github.com/stefanbesler/tony.git
 cd tony
 docker build --tag tony:main
 docker run -d --restart=unless-stopped \
+  -v /folder/mp3s:/mp3s \
   -e TONY_USERNAME=<tonies.com username> \
   -e TONY_PASSWORD=<tonies.com password> \
   -e TONY_PLAYLIST=<playlist_url> \

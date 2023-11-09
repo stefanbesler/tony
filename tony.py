@@ -124,7 +124,7 @@ def main():
                 
             notify(args.pushover_userkey, args.pushover_apptoken, "Update successful", "\n".join([t.title for t in playlist_titles]))                
         else:
-            logging.info(f"'{creative_tonie.name}' is up-to-date")
+            logging.info(f"'{creative_tonie.name}' is up-to-date with {len(playlist_titles)} tracks")
 
         sys.exit(0)
         
